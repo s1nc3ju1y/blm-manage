@@ -16,7 +16,7 @@ const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 
 const visitor = r => require.ensure([], () => r(require('@/page/visitor')), 'visitor');
 const newMember = r => require.ensure([], () => r(require('@/page/newMember')), 'newMember');
 const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
-const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
+// const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
 const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
 const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
@@ -74,11 +74,13 @@ const routes = [
 			path: '/uploadImg',
 			component: uploadImg,
 			meta: ['文本编辑', 'MarkDown'],
-		},{
-			path: '/vueEdit',
-			component: vueEdit,
-			meta: ['编辑', '文本编辑'],
-		},{
+		},
+		// {
+		// 	path: '/vueEdit',
+		// 	component: vueEdit,
+		// 	meta: ['编辑', '文本编辑'],
+		// },
+		{
 			path: '/adminSet',
 			component: adminSet,
 			meta: ['设置', '管理员设置'],

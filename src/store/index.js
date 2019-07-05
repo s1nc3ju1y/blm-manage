@@ -14,6 +14,9 @@ const mutations = {
 	saveAdminInfo(state, adminInfo) {
 		state.adminInfo = adminInfo;
 	},
+	clearAdminInfo(state, adminInfo) {
+		state.adminInfo = adminInfo;
+	}
 }
 
 const actions = {
@@ -28,6 +31,9 @@ const actions = {
 		}catch(err){
 			// console.log(err.message)
 		}
+	},
+	async clearAdminData({commit}){
+		commit('clearAdminInfo', {avatar:"default.jpg" });
 	}
 }
 

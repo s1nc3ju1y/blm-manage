@@ -1,6 +1,5 @@
 <template>
     <div class="header_container">
-
 		<el-breadcrumb separator="/">
 			<el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">{{item}}</el-breadcrumb-item>
@@ -27,23 +26,25 @@
     		}
     	},
     	created(){
-    		if (!this.adminInfo.id) {
-				console.log('this is headtop')
-    			this.getAdminData()
-    		}
+			this.getAdminData()
+    		// if (!this.adminInfo.id) {
+    		// 	this.getAdminData()
+    		// }
     	},
     	computed: {
-    		...mapState(['adminInfo']),
+			...mapState(['adminInfo']),
     	},
 		methods: {
 			...mapActions(['getAdminData']),
+			...mapActions(['clearAdminData']),
 			async handleCommand(command) {
 				if (command == 'home') {
 					this.$router.push('/manage');
 				}else if(command == 'signout'){
 					const res = await signout()
-					removeStore("name");
 					if (res.status == 1) {
+						removeStore("name")
+						this.clearAdminData()
 						this.$message({
 	                        type: 'success',
 	                        message: '退出成功'
