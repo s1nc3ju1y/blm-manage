@@ -14,10 +14,10 @@
 						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
 					</el-form-item>
 					<el-form-item>
-				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
+				    	<el-button type="primary" @click="submitLoginForm('loginForm')" class="submit_btn">登录</el-button>
 				  	</el-form-item>
 					<el-form-item>
-				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">没有账号?立即注册</el-button>
+				    	<el-button type="primary" @click="submitRegisterForm('loginForm')" class="submit_btn">没有账号?立即注册</el-button>
 				  	</el-form-item>
 				</el-form>
 	  		</section>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-	import {login, getAdminInfo} from '@/api/getData'
+	import {login, Register, getAdminInfo} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
 	import {getStore, setStore} from '@/config/mUtils'
 	export default {
@@ -50,9 +50,6 @@
 		},
 		mounted(){
 			this.showLogin = true;
-			// if (!this.adminInfo.id) {
-    		// 	this.getAdminData()
-			// }
 			this.localInfo = getStore("name")
 			if (this.localInfo) {
 				this.$message({
@@ -67,26 +64,10 @@
 		},
 		methods: {
 			...mapActions(['getAdminData']),
-			async submitForm(formName) {
+			async submitLoginForm(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
 						const res = await login({user_name: this.loginForm.username, password: this.loginForm.password})
-						// try{
-						// 	const res = await getAdminInfo()
-						// 	this.adminInfo.admin = res.data.admin;
-						// 	this.adminInfo.avatar = res.data.avatar;
-						// 	this.adminInfo.city = res.data.city;
-						// 	this.adminInfo.create_time = res.data.create_time;
-						// 	this.adminInfo.id = res.data.id;
-						// 	this.adminInfo.user_name = res.data.user_name;
-						// 	if (res.status == 1) {
-						// 		alert('AdminInfo Get');
-						// 	}else{
-						// 		throw new Error(res.type)
-						// 	}
-						// }catch(err){
-						// 	console.log(err.message)
-						// }
 						setStore("name", this.loginForm.username)
 						if (res.status == 1) {
 							this.$message({
@@ -110,6 +91,31 @@
 					}
 				});
 			},
+			async submitRegisterForm(formName) {
+				this.$refs[formName].validate(async (valid) => {
+					if (valid) {
+						const res = await Register({user_name: this.loginForm.username, password: this.loginForm.password})
+						if (res.status == 1) {
+							this.$message({
+		                        type: 'success',
+		                        message: '注册成功'
+		                    });
+						}else{
+							this.$message({
+		                        type: 'error',
+		                        message: res.message
+		                    });
+						}
+					} else {
+						this.$notify.error({
+							title: '错误',
+							message: '请输入正确的用户名密码',
+							offset: 100
+						});
+						return false;
+					}
+				});
+			}
 		},
 		// watch: {
 		// 	adminInfo: function (newValue){

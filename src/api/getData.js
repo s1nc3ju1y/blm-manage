@@ -7,6 +7,12 @@ import fetch from '@/config/fetch'
 export const login = data => fetch('/admin/login', data, 'POST');
 
 /**
+ * 注册
+ */
+
+export const Register = data => fetch('/admin/register', data, 'POST');
+
+/**
  * 退出
  */
 
